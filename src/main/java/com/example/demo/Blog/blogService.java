@@ -5,39 +5,35 @@ import java.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service
+import javax.swing.text.html.HTML;
 
+@Service
 public class blogService {
 
-	//private static long id;
-	private static blogRepository Blogrepository;
+	private final blogRepository Blogrepository;
+	private final tagsService TagsService;
 
 	@Autowired
-	public blogService(blogRepository Blogrepository) {
+	public blogService(blogRepository Blogrepository, tagsService TagsService) {
 		this.Blogrepository = Blogrepository;
+		this.TagsService = TagsService;
 	}
 
-	public static List<blog> getBlogs() {
+	public List<blog> getBlogs() {
 		return Blogrepository.findAll();
 	}
 
-	public static void addnewBlog(blog newblog) {
-		Blogrepository.save(newblog);
+	public void addnewBlog(blog newblog) {
+		this.Blogrepository.save(newblog);
 	}
 
 	public List<blog> getBlogbyTag(String tag) {
-		List<blog> blogresult = Blogrepository.findblogBytag(tag);
-		return blogresult;
+
+		tags tagsList = this.TagsService.getChildTags(tag);
+		String[] tagName = (tagsList.main_tag + " " + tagsList.child_tags).split(" ");
+		List<blog> blogList = this.Blogrepository.findblogsBy(tagName);
+
+		return blogList;
 	}
 
-
-
-
-
-	/*public static List<blog> getBlogById(long id) {
-		blogService.id = id;
-		//int nTags = 3;
-		//String[] tagsarr = {"Science","Chemistry","Physical chemistry"};
-		return Blogrepository.findAllById(id);
-	}*/
 }

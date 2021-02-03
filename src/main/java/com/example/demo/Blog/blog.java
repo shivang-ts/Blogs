@@ -1,43 +1,37 @@
 package com.example.demo.Blog;
-import java.util.*;
-
 import javax.persistence.*;
 
-@Entity //For hibernate
+@Entity
 @Table
 
 public class blog {
 
     @Id // Generates primary keys
     @SequenceGenerator(
-        name = "blog_sequence",
-        sequenceName = "blog_sequence",
-        allocationSize = 1
-        )
-    
+            name = "blog_sequence",
+            sequenceName = "blog_sequence",
+            allocationSize = 1
+    )
     @GeneratedValue(
-        strategy = GenerationType.SEQUENCE,
-        generator = "blog_sequence"
-        )
-
+            strategy = GenerationType.SEQUENCE,
+            generator = "blog_sequence"
+    )
+    @Column
     private Long id;
+    @Column
     private String title;
+    @Column
     private String body;
+    @Column
     private String tag;
-    //tag = new String["science","chemistry","physical chemistry"];
-    /*Use some datattype to store tags as well. Probably a list of string
-    Set<String> hash_Set = new HashSet<String>(); 
-    hash_Set.add("Geeks"); */
-    //private Set<String> tags = new HashSet<String>();
-    
 
     public blog() {
-    
+
     }
 
-    public blog(String title, 
-                String body, 
-                long id, 
+    public blog(String title,
+                String body,
+                long id,
                 String tag) {
         this.title = title;
         this.body = body;
@@ -69,13 +63,12 @@ public class blog {
         this.body = body;
     }
 
-    /*public long getid() {
+    public long getid() {
         return id;
     }
-
     public void setid(long id) {
         this.id = id;
-    }*/
+    }
 
     public String getTag() {
         return tag;
@@ -96,4 +89,3 @@ public class blog {
                 '}';
     }
 }
-
